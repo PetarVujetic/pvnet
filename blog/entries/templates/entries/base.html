@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>PVNet</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static "entries/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Custom styles for this template -->
+  <link href="{% static "entries/css/blog-home.css" %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <div class="wrapper">
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'blog-home' %}"> <i>PV </i><b>Net</b> </a>
+
+
+
+      <form class="navbar-form navbar-left" method="GET" action="{% url 'user_search' %}">
+      <div class="form-group">
+        <input type="text" class="form-control" name="search" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-search"></span> </button>
+    </form>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="nav navbar-nav navbar-right">
+
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile' user.pk %}"> <span class="glyphicon glyphicon-user"> </span> {{user.username}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'create_entry' %}"> <span class="glyphicon glyphicon-pencil"></span> Post </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}"> <span class="glyphicon glyphicon-log-out"> </span> Log Out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}"> <span class="glyphicon glyphicon-user"></span> Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}"> <span class="glyphicon glyphicon-log-in"></span> Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+    {% block content %} {% endblock %}
+    </div>
+  </div>
+  <div class="push"></div>
+
+  </div>
+
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; PV Net 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static "entries/vendor/jquery/jquery.min.js" %}"></script>
+  <script src="{% static "entries/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+  <script type="text/javascript">
+    $(document).ready(function(event){
+      $(document).on("click", '#follow', function(event){
+        event.preventDefault();
+        var pk = $(this).attr('value');
+        $.ajax({
+          type : 'POST',
+          url : '{% url "follow_user" %}',
+          data : {'pk':pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          dataType: 'json',
+          success: function(response){
+              $('#follow-section').html(response['form'])
+              console.log($('#follow-section').html(response['form']));
+          },
+          error: function(rs, e){
+            console.log(rs.responseText);
+          },
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

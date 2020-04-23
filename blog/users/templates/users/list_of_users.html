@@ -1,0 +1,34 @@
+{% extends "entries/base.html" %}
+{% load static %}
+{% block content %}
+
+{% for searched_user in all_search_results %}
+{% if searched_user != user %}
+<div class="center-items">
+  <div class="col-md-3">
+    <div class="card" style="width: 18rem;">
+      <h4 class="profile-name"><b>{{searched_user.username}}</b></h4>
+      {% if searched_user.userprofile.image %}
+      <img class="card-img-top" src="{{searched_user.userprofile.image.url}}" width="200px" alt="No image">
+      {% else %}
+      <img class="card-img-top" src="{% static 'photo/no-photo.png' %}" width="200px" alt="No image">
+      {% endif %}
+                {% if request.user.is_authenticated %}
+      <div class="card-body">
+        <a href="{% url 'profile' searched_user.pk %}"><h5 class="card-title">View profile</h5></a>
+        <!--  <button type="button" class="btn btn-primary" name="button"><span class="glyphicon glyphicon-envelope"></span> </button> -->
+      </div>
+      {% endif %}
+      <!-- <ul class="list-group list-group-flush">
+      <li class="list-group-item"><strong>Username:</strong> <br>{{user.username}}</li>
+      <li class="list-group-item"><strong>Email:</strong> <br>{{user.email}}</li>
+    </ul> -->
+  </div>
+</div>
+</div>
+{% endif %}
+
+{% empty %}
+<h4>No users found.</h4>
+{% endfor %}
+{% endblock %}

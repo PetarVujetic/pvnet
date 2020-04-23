@@ -1,0 +1,40 @@
+{% extends "entries/base.html" %}
+{% block content %}
+<!-- Blog Post -->
+<div class="col-md-8">
+  <div class="card mb-4 mt-4">
+    <div class="card-body">
+      <h2 class="card-title">{{ entry.entry_title }}</h2>
+      <p class="card-text"> {{ entry.entry_text|linebreaks }}</p>
+      <a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-up"></span> </a>
+      <a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-down"></span> </a>
+
+    </div>
+    <div class="card-footer text-muted">
+      Posted on {{ entry.entry_date }} by
+    <a href="{% url 'profile' entry.entry_author.pk %}"><span class= "text-info mr-2">{{ entry.entry_author }}</span></a>
+    </div>
+
+    <div class="comment-section">
+
+      {% for comment in entry.comment %}
+      <div class="card-body">
+        <p class="card-text"> {{ comment.comment_text }}</p>
+      </div>
+      <div class="card-footer text-muted">
+        Commented on {{ comment.comment_date }} by
+      <a href="{% url 'profile' comment.comment_author.pk %}"><span class= "text-info mr-2">{{ comment.comment_author }}</span></a>
+      </div>
+      {% endfor %}
+
+			<div class="status-upload">
+				<form method="POST">
+					<textarea id="comment" value="{{ entry_user.pk }}" placeholder="What are your thoughts on this?" ></textarea>
+					<button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Comment</button>
+				</form>
+			</div><!-- Status Upload  -->
+		</div><!-- Comment section -->
+
+  </div>
+</div>
+{% endblock %}

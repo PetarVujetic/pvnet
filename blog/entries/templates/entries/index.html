@@ -1,0 +1,67 @@
+{% extends "entries/base.html" %}
+{% load static %}
+{% block content %}
+<!-- Blog Post -->
+<div class="col-md-12">
+  {% for entry in blog_entries %}
+  <div class="card mb-4 mt-4">
+    <div class="card-body">
+      <h2 class="card-title">{{ entry.entry_title }}</h2>
+      <p class="card-text"> {{ entry.entry_text|truncatechars:100 }}</p>
+      <a href="{% url 'entry-detail' entry.pk %}" class="btn btn-primary btn-sm">Read More/Comments &rarr;</a>
+      <a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-up"></span> </a>
+      <a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-down"></span> </a>
+    </div>
+    <div class="card-footer text-muted">
+      Posted on {{ entry.entry_date }} by
+      <a href="{% url 'profile' entry.entry_author.pk %}"><span class= "text-info mr-2">{{ entry.entry_author }}
+{% if entry.entry_author == user %}(me){% endif %}</span></a>
+    </div>
+  </div>
+  {% empty %}
+  <h4>No entries found.</h4>
+  {% endfor %}
+
+  {% if is_paginated %}
+            <nav>
+                <ul class="pagination justify-content-center" style="margin:20px 0">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                        <span>Prev</span>
+                    </a>
+                    </li>
+                {% else %}
+                    <li class="disabled page-item">
+                    <a class="page-link" href="#">
+                        <span>Prev</span>
+                    </a>
+                    </li>
+                {% endif %}
+
+                {% for page in page_range %}
+                    <li {% if page == page_obj.number %} class="active page-item" {% endif %}>
+                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                        <span>Next</span>
+                    </a>
+                    </li>
+                {% else %}
+                    <li {% if not page_obj.has_next %}class="disabled page-item"{% endif %}>
+                    <a class="page-link" href="#">
+                        <span>Next</span>
+                    </a>
+                    </li>
+                {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+
+
+  </div>
+
+{% endblock %}

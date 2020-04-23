@@ -1,0 +1,23 @@
+{% if request.user.is_authenticated %}
+  {% if request.user != entry_user %}
+
+  <form method="post">
+    {% csrf_token %}
+    {% if is_following %}
+      {% if user_follow %}
+        <button type="button" id="follow"  class="btn btn-danger btn-sm" value="{{ user_follow.pk }}" name="button">Unfollow</button>
+      {% else %}
+        <button type="button" id="follow"  class="btn btn-danger btn-sm" value="{{ entry_user.pk }}" name="button">Unfollow</button>
+      {% endif %}
+      {% else %}
+        {% if user_follow %}
+          <button type="button" id="follow" class="btn btn-success btn-sm" value="{{ user_follow.pk }}" name="button">Follow</button>
+        {% else %}
+          <button type="button" id="follow" class="btn btn-success btn-sm" value="{{ entry_user.pk }}" name="button">Follow</button>
+        {% endif %}
+    {% endif %}
+  </form>
+  {% else %}
+  <h5 style="color: blue; font-size: 1.5em; font-weight: bold;"> My Profile</h5>
+  {% endif %}
+{% endif %}

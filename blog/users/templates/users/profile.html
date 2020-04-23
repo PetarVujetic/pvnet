@@ -1,0 +1,96 @@
+{% extends "entries/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+          {% if entry_user.userprofile.image %}
+          <img src="{{entry_user.userprofile.image.url}}" class="img-responsive" alt="No image">
+            {% else %}
+          <img class="img-responsive" src="{% static 'photo/no-photo.png' %}" alt="No image">
+          {% endif %}
+				</div>
+				<!-- END SIDEBAR USERPIC -->
+
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						{{entry_user.username}}
+					</div>
+					<div class="profile-usertitle-job">
+						Followers &nbsp; Following
+					</div>
+					<span class="followers-following">
+					{{ followers_number }}
+				</span>
+
+				<span class="followers-following">
+				{{ following_number }}
+				</span>
+
+
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR BUTTONS -->
+				<div class="profile-userbuttons">
+          <div id="follow-section">
+            {% include "users/follow.html" %}
+          </div>
+				<!-- btn btn-danger btn-sm -->
+				</div>
+				<!-- END SIDEBAR BUTTONS -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+
+				</div>
+				<!-- END MENU -->
+			</div>
+		</div>
+
+
+
+    </div>
+
+		<div class="col-md-8">
+		{% for entry in profile_entries %}
+		<div class="card mb-4 mt-4">
+		<div class="card-body">
+			<h2 class="card-title">{{ entry.entry_title }}</h2>
+			<p class="card-text"> {{ entry.entry_text|truncatechars:100 }}</p>
+			<a href="{% url 'entry-detail' entry.pk %}" class="btn btn-primary btn-sm">Read More/Comments &rarr;</a>
+			<a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-up"></span> </a>
+      <a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-down"></span> </a>
+		</div>
+		<div class="card-footer text-muted">
+			Posted on {{ entry.entry_date }}
+		</div>
+		</div>
+		{% empty %}
+		<h4>This user has no entries.</h4>
+		{% endfor %}
+
+
+		{% if is_paginated %}
+		<!-- Pagination -->
+		<ul class="pagination justify-content-center mb-4">
+		{% if page_obj.has_previous %}
+		<li class="page-item">
+			<a class="page-link" href="?page={{ page_obj.previous_page_number }}">&larr; Previous Page</a>
+		</li>
+		{% endif %}
+
+		{% if page_obj.has_next %}
+		<li class="page-item">
+			<a class="page-link" href="?page={{ page_obj.next_page_number }}">Next Page &rarr;</a>
+		</li>
+		{% endif %}
+		</ul>
+		{% endif %}
+		</div>
+
+
+{% endblock %}
