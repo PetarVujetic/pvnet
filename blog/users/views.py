@@ -38,11 +38,10 @@ class ProfileView(ListView):
     model = Entry
     template_name = 'users/profile.html'
     context_object_name = "profile_entries"
-    ordering = ['-entry_date']
     paginate_by = 5
 
     def get_queryset(self):
-        return Entry.objects.filter(entry_author_id=self.kwargs['pk'])
+        return Entry.objects.filter(entry_author_id=self.kwargs['pk']).order_by('-entry_date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

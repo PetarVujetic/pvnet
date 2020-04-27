@@ -17,7 +17,6 @@ class HomeView(LoginRequiredMixin, ListView):
         blog_entries = []
         for i in following_list:
             blog_entries += Entry.objects.order_by('entry_date').filter(entry_author = i.following.user)
-        blog_entries +=  Entry.objects.order_by('entry_date').filter(entry_author = user)
         blog_entries.reverse()
         return blog_entries
 
