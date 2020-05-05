@@ -3,6 +3,7 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-blog-home/blob/master/LICENSE)
  */
+
  .profile {
    margin: 20px 0;
  }
@@ -16,7 +17,11 @@
 
  }
 
-
+.com{
+  margin-left: 50px;
+  margin-top: 0;
+  padding-top: 0;
+}
 
 
  .profile-userpic img {

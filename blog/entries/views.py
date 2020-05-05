@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Entry
+from .models import Entry, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 
@@ -25,6 +25,12 @@ class EntryView(LoginRequiredMixin, DetailView):
     model = Entry
     template_name = 'entries/entry_detail.html'
     context_object_name = "entry"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comments = Comment.objects.filter(comment_entry = context['entry'])
+        context['comments'] = comments
+        return context
 
 
 class CreateEntryView(LoginRequiredMixin, CreateView):

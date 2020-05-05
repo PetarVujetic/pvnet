@@ -18,10 +18,10 @@ class Comment(models.Model):
     comment_author = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
     comment_text = models.TextField(blank=True)
-    comment = models.DateTimeField(auto_now_add=True)
+    comment_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.comment_author.username + " " + comment_entry.entry_title
+        return self.comment_author.username + " " + self.comment_entry.entry_title
 
     class Meta:
         verbose_name_plural = 'comments'

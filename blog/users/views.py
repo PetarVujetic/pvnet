@@ -60,6 +60,7 @@ def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         userForm = UserProfileForm(request.POST)
+        
 
         if form.is_valid() and userForm.is_valid():
             form.save()
@@ -82,11 +83,25 @@ def register(request):
     context = {'form':form, 'userForm':userForm}
     return render(request, 'users/register.html', context)
 
+def login_view(request):
+        context = {}
+        if request.method =="POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username = username, password = password)
+            if(user):
+                login(request, user)
+                return redirect('blog-home')
+            else:
+                context = {'error': "Username or password is incorrect."}
+
+        return render(request, 'users/login.html', context)
 
 class SearchView(ListView):
     model = User
     template_name = 'users/list_of_users.html'
     context_object_name = 'all_search_results'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
