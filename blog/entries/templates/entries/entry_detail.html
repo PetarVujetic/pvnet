@@ -21,27 +21,8 @@
   <path fill-rule="evenodd" d="M3 2.5a.5.5 0 00-.5.5v4A2.5 2.5 0 005 9.5h8.5a.5.5 0 000-1H5A1.5 1.5 0 013.5 7V3a.5.5 0 00-.5-.5z" clip-rule="evenodd"/>
 </svg>
 <i>Comment section</i>
-<div class="card mb-4 mt-4 com">
-    <div class="comment-section">
-
-      {% for comment in comments %}
-
-      <div class="card-body">
-        <p class="card-text"> <b><i>{{ comment.comment_text }}</i></b></p>
-      </div>
-      <div class="card-footer text-muted">
-        Commented {{ comment.comment_date }} by
-      <a href="{% url 'profile' comment.comment_author.pk %}"><span class= "text-info mr-2">{{ comment.comment_author }}</span></a>
-      </div>
-      {% endfor %}
-
-			<div class="status-upload">
-				<form method="POST">
-					<textarea id="comment" value="{{ entry_user.pk }}" placeholder="What are your thoughts on this?" ></textarea>
-					<button type="submit" class="btn btn-primary"><i class="fa fa-share"></i> Comment</button>
-				</form>
-			</div><!-- Status Upload  -->
-		</div><!-- Comment section -->
-  </div>
+<div id="comment-section">
+  {% include "entries/comment.html" %}
+</div>
 </div>
 {% endblock %}

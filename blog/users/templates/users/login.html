@@ -21,7 +21,9 @@
                  <input class="form-control" placeholder="Username" name="username"  type="text">
              </div>
              <div class="form-group">
-               <input class="form-control" placeholder="Password" name="password" type="password">
+               <input id="pass_log_id" type="password" class="form-control" name="password" placeholder="Password">
+               <span toggle="#password-field" class="glyphicon glyphicon-eye-open field-icon toggle-password"></span>
+
              </div>
              <input class="btn btn-lg btn-primary btn-block" type="submit" value="Login">
              If you don't have an account, Sign Up <a href="{% url 'register' %}">here.</a>

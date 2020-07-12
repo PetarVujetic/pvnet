@@ -3,8 +3,12 @@ from django.views.generic import ListView, DetailView, CreateView
 from .models import Entry, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 
-# Create your views here.
+
+
 class HomeView(LoginRequiredMixin, ListView):
     model = Entry
     template_name = 'entries/index.html'
@@ -16,8 +20,8 @@ class HomeView(LoginRequiredMixin, ListView):
         following_list = user.userprofile.following.all()
         blog_entries = []
         for i in following_list:
-            blog_entries += Entry.objects.order_by('entry_date').filter(entry_author = i.following.user)
-        blog_entries.reverse()
+            blog_entries += Entry.objects.order_by('-entry_date').filter(entry_author = i.following.user)
+
         return blog_entries
 
 
@@ -41,3 +45,22 @@ class CreateEntryView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.entry_author = self.request.user
         return super().form_valid(form)
+
+def createComment(request):
+    comment_author = request.user
+    comment_entry = get_object_or_404(Entry, pk = request.POST.get('pk'))
+    comment_text = request.POST.get('comment_text')
+
+    Comment.objects.create(comment_author=comment_author, comment_entry=comment_entry, comment_text = comment_text)
+    comments = Comment.objects.filter(comment_entry=comment_entry)
+    print(request.POST)
+
+    context = {
+        "entry": comment_entry,
+        "comments": comments,
+    }
+
+
+    if request.is_ajax():
+        html = render_to_string("entries/comment.html", context, request=request)
+        return JsonResponse({'form': html})

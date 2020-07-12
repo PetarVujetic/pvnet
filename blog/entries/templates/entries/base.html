@@ -10,34 +10,29 @@
   <meta name="author" content="">
 
   <title>PVNet</title>
-
-  <!-- Bootstrap core CSS -->
   <link href="{% static "entries/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <!-- Custom styles for this template -->
   <link href="{% static "entries/css/blog-home.css" %}" rel="stylesheet">
 
 </head>
 
 <body>
 
-  <!-- Navigation -->
   <div class="wrapper">
 
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'blog-home' %}"> <i>PV </i><b>Net</b> </a>
+      <a class="navbar-brand" href="{% url 'blog-home' %}"> <img src="{% static "photo/director.png" %}" width="30px" height="30px" class="d-inline-block align-top" style="background-color; white"> <i>PV </i><b>Net</b> </a>
 
 
-
+      {% if user.is_authenticated %}
       <form class="navbar-form navbar-left" method="GET" action="{% url 'user_search' %}">
       <div class="form-group">
         <input type="text" class="form-control" name="search" placeholder="Search">
       </div>
       <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-search"></span> </button>
     </form>
-
+    {% endif %}
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -85,7 +80,7 @@
     <!-- /.container -->
   </footer>
 
-  <!-- Bootstrap core JavaScript -->
+
   <script src="{% static "entries/vendor/jquery/jquery.min.js" %}"></script>
   <script src="{% static "entries/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
   <script type="text/javascript">
@@ -108,6 +103,42 @@
         });
       });
     });
+    $(document).ready(function(event){
+      $(document).on("click", '#comment', function(event){
+        event.preventDefault();
+        var pk = $(this).attr('value');
+        var comment_text = $('textarea#comment_text').val();
+        $.ajax({
+          type : 'POST',
+          url : '{% url "createComment" %}',
+          data : {'pk':pk, "comment_text":comment_text, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          dataType: 'json',
+          success: function(response){
+              $('#comment-section').html(response['form'])
+              console.log($('#comment-section').html(response['form']));
+              console.log("USPEH");
+          },
+          error: function(rs, e){
+            console.log(rs.responseText);
+            console.log("NEUSPEH");
+          },
+        });
+      });
+    });
+
+
+      $("body").on('click', '.toggle-password', function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $("#pass_log_id");
+        if (input.attr("type") === "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+
+      });
+
+
   </script>
 </body>
 

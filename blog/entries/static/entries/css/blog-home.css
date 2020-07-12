@@ -1,14 +1,22 @@
-/*!
- * Start Bootstrap - Blog Home (https://startbootstrap.com/template-overviews/blog-home)
- * Copyright 2013-2019 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-blog-home/blob/master/LICENSE)
- */
-
  .profile {
    margin: 20px 0;
  }
 
- /* Profile sidebar */
+.bg-custom, footer{
+  background-color: #242526;
+
+}
+
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-right: 10px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+
  .profile-sidebar {
    padding: 20px 0 10px 0;
    background: #fff;

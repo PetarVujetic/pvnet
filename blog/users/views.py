@@ -22,9 +22,17 @@ def follow_user(request):
     else:
         is_following = True
         Follower.objects.create(follower=user.userprofile, following=user_follow.userprofile)
+
+    followers_number = user_follow.userprofile.followers.all().count()
+    following_number = user_follow.userprofile.following.all().count()
+    user_follow_username = user_follow.userprofile.user.username
+
     context = {
         "user_follow":user_follow,
-        "is_following":is_following
+        "is_following":is_following,
+        "entry_user.username": user_follow_username,
+        "followers_number": followers_number,
+        "following_number": following_number
     }
     if request.is_ajax():
         html = render_to_string("users/follow.html", context, request=request)
@@ -60,7 +68,7 @@ def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         userForm = UserProfileForm(request.POST)
-        
+
 
         if form.is_valid() and userForm.is_valid():
             form.save()

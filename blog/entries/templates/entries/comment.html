@@ -1,0 +1,24 @@
+<div class="card mb-4 mt-4 com">
+    <div class="comment-section">
+
+      {% for comment in comments %}
+      <div class="border border-info mb-3">
+        <div class="card-body">
+          <p class="card-text"> <b><i>{{ comment.comment_text }}</i></b></p>
+        </div>
+        <div class="card-footer text-muted">
+          Commented on {{ comment.comment_date }} by
+          <a href="{% url 'profile' comment.comment_author.pk %}"><span class= "text-info mr-2">{{ comment.comment_author }}</span></a>
+        </div>
+      </div>
+      {% endfor %}
+
+			<div class="status-upload">
+				<form method="POST">
+          {% csrf_token %}
+					<textarea id="comment_text" placeholder="What are your thoughts on this?" ></textarea>
+					<button id="comment" type="submit" value="{{ entry.pk }}" class="btn btn-primary"><i class="fa fa-share"></i> Comment</button>
+				</form>
+			</div><!-- Status Upload  -->
+		</div><!-- Comment section -->
+  </div>
