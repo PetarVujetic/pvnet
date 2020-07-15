@@ -1,16 +1,35 @@
 {% extends "entries/base.html" %}
 {% block content %}
-<div class="col-md-8">
-  <a href="{% url 'blog-home' %}">Back to Home</a>
+<div class="col-md-8 centered">
+
   <div class="card mb-4 mt-4">
     <div class="card-header">
-      Create Blog Post
+      Create your idea
     </div>
     <div class="card-body">
     <form class="" method="POST">
       {% csrf_token %}
-      {{form.as_p}}
-      <button type="submit" class="btn btn-primary" name="button">Post Entry</button>
+      
+      <form accept-charset="UTF-8" method="POST" role="form">
+        {% csrf_token %}
+               <fieldset>
+           <div class="form-group">
+             {% if error %}
+             <div class="alert alert-warning" role="alert">
+               {{error}}
+             </div>
+             {% endif %}
+             <input type="text" class="form-control" name="entry_title" placeholder="Entry Title">
+            </div>
+            <div class="form-group">
+              <textarea name="entry_text" class="entryText" placeholder="Entry text" ></textarea>
+         </div>
+         <input class="btn btn-lg btn-primary btn-block" type="submit" value="Post">
+        
+       </fieldset>
+         </form>
+
+  
     </form>
     </div>
   </div>

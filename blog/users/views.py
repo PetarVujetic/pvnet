@@ -126,3 +126,20 @@ class SearchView(ListView):
        else:
            result = None
        return result
+
+def delete_entry(request):
+
+    delete_pk = request.POST.get('pk')
+    user_pk = request.user.pk
+
+    Entry.objects.filter(pk = delete_pk).delete()
+    
+    profile_entries = Entry.objects.filter(entry_author_id=user_pk).order_by('-entry_date')
+        
+    context = {
+        "profile_entries":profile_entries
+    }
+    
+    if request.is_ajax():
+        html = render_to_string("users/userEntries.html", context, request=request)
+        return JsonResponse({'form': html})

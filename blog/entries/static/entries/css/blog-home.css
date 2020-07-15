@@ -7,6 +7,41 @@
 
 }
 
+.entryText{
+  width: 100%;
+  height: 300px;
+}
+
+.centered{
+  margin: auto;
+}
+
+.button,
+.button:focus, 
+.button:hover,
+.button:visited{
+  background: none;
+  padding: 0px;
+  border: none;
+}
+
+.delete-button{
+  display: flex;
+  width: 95%;
+  justify-content: flex-end;
+  position: absolute;
+  color: black;
+}
+
+.delete-button:hover{
+  color: red;
+  background: none;
+  padding: 0px;
+  border: none;
+}
+
+
+
 .field-icon {
   float: right;
   margin-left: -25px;
@@ -161,9 +196,6 @@ margin-top: 20px;
 margin-bottom: 20px;
 }
 
-.buttons{
-
-}
 
 
 body{ background: #fafafa;}

@@ -15,16 +15,16 @@ class Entry(models.Model):
         return self.entry_title
 
 
-class LikeSystem(models.Model):
-    likeSystem_entry = models.OneToOneField(Entry, on_delete=models.CASCADE)
-    likeSystem_likes = models.ForeignKey(User, on_delete=models.CASCADE, related_name="liker")
-    likeSystem_dislikes = models.ForeignKey(User, on_delete=models.CASCADE, related_name="disliker")
+# class LikeSystem(models.Model):
+#     likeSystem_entry = models.OneToOneField(Entry, on_delete=models.CASCADE)
+#     likeSystem_likes = models.ForeignKey(User, on_delete=models.CASCADE, related_name="liker")
+#     likeSystem_dislikes = models.ForeignKey(User, on_delete=models.CASCADE, related_name="disliker")
 
-    class Meta:
-        verbose_name_plural = 'likeSystems'
+#     class Meta:
+#         verbose_name_plural = 'likeSystems'
 
-    def __str__(self):
-        return self.likeSystem_entry
+#     def __str__(self):
+#         return self.likeSystem_entry
 
 
 class Comment(models.Model):

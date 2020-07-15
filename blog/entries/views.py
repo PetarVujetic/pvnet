@@ -64,3 +64,5 @@ def createComment(request):
     if request.is_ajax():
         html = render_to_string("entries/comment.html", context, request=request)
         return JsonResponse({'form': html})
+
+

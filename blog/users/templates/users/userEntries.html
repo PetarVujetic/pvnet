@@ -1,0 +1,51 @@
+
+    {% for entry in profile_entries %}
+    <div class="card mb-4 mt-4">
+    <div class="card-body">
+
+            {% if entry.entry_author == request.user %}
+            
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="delete-button">
+                        <button class="button" type="submit" id="delete" value="{{ entry.pk }}" onclick="return confirm('Are you sure you want to delete this?')">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                              </svg>
+                                </button>
+                    </div>	
+                </form>	
+                    		
+                {% endif %}
+
+        <h2 class="card-title">{{ entry.entry_title }}</h2>
+        <p class="card-text"> {{ entry.entry_text|truncatechars:100 }}</p>
+        <a href="{% url 'entry-detail' entry.pk %}" class="btn btn-primary btn-sm">Read More/Comments &rarr;</a>
+        <a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-up"></span> </a>
+  <a href="" class="btn btn-primary btn-sm"> <span class="glyphicon glyphicon-thumbs-down"></span> </a>
+    </div>
+    <div class="card-footer text-muted">
+        Posted on {{ entry.entry_date }}
+    </div>
+    </div>
+    {% empty %}
+    <h4>This user has no entries.</h4>
+    {% endfor %}
+    
+    {% if is_paginated %}
+    <!-- Pagination -->
+    <ul class="pagination justify-content-center mb-4">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&larr; Previous Page</a>
+    </li>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next Page &rarr;</a>
+    </li>
+    {% endif %}
+    </ul>
+    {% endif %}
