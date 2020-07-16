@@ -1,4 +1,23 @@
+<div class="profile-usertitle">
+  <div class="profile-usertitle-name">
+    {% if entry_user.username%}
+    {{entry_user.username}}
+    {% else %}
+    {{ username }}
+    {% endif %}
+  </div>
+  <div class="profile-usertitle-job">
+    Followers Following
+  </div>
+  <span class="followers-following f">
+  {{ followers_number }}
+</span>
 
+<span class="followers-following fer">
+{{ following_number }}
+</span>
+
+</div>
 {% if request.user.is_authenticated %}
   {% if request.user != entry_user %}
 

@@ -14,28 +14,9 @@
           <img class="img-responsive" src="{% static 'photo/no-photo.png' %}" alt="No image">
           {% endif %}
 				</div>
-				<!-- END SIDEBAR USERPIC -->
-
-				<!-- SIDEBAR USER TITLE -->
-				<div class="profile-usertitle">
-					<div class="profile-usertitle-name">
-						{{entry_user.username}}
-					</div>
-					<div class="profile-usertitle-job">
-						Followers &nbsp; Following
-					</div>
-					<span class="followers-following">
-					{{ followers_number }}
-				</span>
-
-				<span class="followers-following">
-				{{ following_number }}
-				</span>
-
-
-				</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
+			
+				
+			
 				<div class="profile-userbuttons">
           <div id="follow-section">
             {% include "users/follow.html" %}

@@ -50,19 +50,35 @@ def createComment(request):
     comment_author = request.user
     comment_entry = get_object_or_404(Entry, pk = request.POST.get('pk'))
     comment_text = request.POST.get('comment_text')
-
-    Comment.objects.create(comment_author=comment_author, comment_entry=comment_entry, comment_text = comment_text)
+    error = False
+    if(comment_text!=""):
+        Comment.objects.create(comment_author=comment_author, comment_entry=comment_entry, comment_text = comment_text)
+    else:
+        error = "Comment text can't be empty!"
+    
     comments = Comment.objects.filter(comment_entry=comment_entry)
     print(request.POST)
+
+    context = {
+        "error": error,
+        "entry": comment_entry,
+        "comments": comments,
+    }
+    if request.is_ajax():
+        html = render_to_string("entries/comment.html", context, request=request)
+        return JsonResponse({'form': html})
+
+def deleteComment(request):
+    comment = get_object_or_404(Comment, pk = request.POST.get('pk'))
+    comment_entry = comment.comment_entry
+    comment.delete()
+    comments = Comment.objects.filter(comment_entry=comment_entry)
 
     context = {
         "entry": comment_entry,
         "comments": comments,
     }
 
-
     if request.is_ajax():
         html = render_to_string("entries/comment.html", context, request=request)
         return JsonResponse({'form': html})
-
-

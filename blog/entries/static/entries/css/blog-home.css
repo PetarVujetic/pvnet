@@ -99,6 +99,7 @@
  }
 
 .followers-following{
+  width: 60px;
   font-weight: bold;
   font-size: 1.5em;
   padding-left: 12%;

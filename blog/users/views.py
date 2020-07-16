@@ -30,7 +30,7 @@ def follow_user(request):
     context = {
         "user_follow":user_follow,
         "is_following":is_following,
-        "entry_user.username": user_follow_username,
+        "username": user_follow_username,
         "followers_number": followers_number,
         "following_number": following_number
     }
