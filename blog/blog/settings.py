@@ -25,7 +25,7 @@ SECRET_KEY = 'mz3_ylu%xxnfs8!#d&(s#4(k#8ir^y0q2qkly95vl%m#wdynsy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 class Entry(models.Model):
@@ -7,24 +7,14 @@ class Entry(models.Model):
     entry_text = models.TextField()
     entry_date = models.DateTimeField(auto_now_add=True)
     entry_author = models.ForeignKey(User, on_delete = models.CASCADE)
-
+    entry_likes = models.ManyToManyField(User, related_name= 'likes', blank=True)
+    
     class Meta:
         verbose_name_plural = 'entries'
 
     def __str__(self):
         return self.entry_title
 
-
-# class LikeSystem(models.Model):
-#     likeSystem_entry = models.OneToOneField(Entry, on_delete=models.CASCADE)
-#     likeSystem_likes = models.ForeignKey(User, on_delete=models.CASCADE, related_name="liker")
-#     likeSystem_dislikes = models.ForeignKey(User, on_delete=models.CASCADE, related_name="disliker")
-
-#     class Meta:
-#         verbose_name_plural = 'likeSystems'
-
-#     def __str__(self):
-#         return self.likeSystem_entry
 
 
 class Comment(models.Model):

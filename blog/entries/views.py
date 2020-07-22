@@ -1,12 +1,11 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
-from .models import Entry, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.views.generic import CreateView, DetailView, ListView
 
+from .models import Comment, Entry
 
 
 class HomeView(LoginRequiredMixin, ListView):
@@ -23,7 +22,11 @@ class HomeView(LoginRequiredMixin, ListView):
             blog_entries += Entry.objects.order_by('-entry_date').filter(entry_author = i.following.user)
 
         return blog_entries
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)     
+        for entry in context['blog_entries']:
+            context['entry.pk'] = entry.entry_likes.all().count()
+        return context
 
 class EntryView(LoginRequiredMixin, DetailView):
     model = Entry
@@ -34,6 +37,12 @@ class EntryView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         comments = Comment.objects.filter(comment_entry = context['entry'])
         context['comments'] = comments
+        
+        if(context['entry'].entry_likes.filter(pk=self.request.user.pk).exists()):
+            context['is_liked'] = True
+        else:
+            context['is_liked'] = False
+
         return context
 
 
@@ -45,6 +54,9 @@ class CreateEntryView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.entry_author = self.request.user
         return super().form_valid(form)
+    
+    
+   
 
 def createComment(request):
     comment_author = request.user
@@ -81,4 +93,26 @@ def deleteComment(request):
 
     if request.is_ajax():
         html = render_to_string("entries/comment.html", context, request=request)
+        return JsonResponse({'form': html})
+
+def likePost(request):
+
+    entry = get_object_or_404(Entry, pk = request.POST.get('pk'))
+
+    if(entry.entry_likes.filter(pk=request.user.pk).exists()):
+        entry.entry_likes.remove(request.user)
+        is_liked = False
+    else:
+        entry.entry_likes.add(request.user)
+        is_liked = True
+    likes_number = entry.entry_likes.all().count()
+
+    context = {
+        "is_liked": is_liked,
+        "entry":  entry,
+        "likes_number":likes_number,
+    }
+
+    if request.is_ajax():
+        html = render_to_string("entries/likesystem.html", context, request=request)
         return JsonResponse({'form': html})

@@ -1,0 +1,18 @@
+<div id="likesystem-section">
+  <form method="POST">
+    {% csrf_token %}
+    <a href="{% url 'entry-detail' entry.pk %}" class="btn btn-primary btn-sm">Read More/Comments &rarr;</a>
+    {% if not entry.entry_author == request.user %} {% if is_liked %}
+    <button type="submit" id="like-post" value="{{ entry.pk }}" class="btn btn-danger btn-sm">
+      <span class="glyphicon glyphicon-thumbs-down"></span>
+    </button>
+    {% else %}
+    <button type="submit" id="like-post" value="{{ entry.pk }}" class="btn btn-primary btn-sm">
+      <span class="glyphicon glyphicon-thumbs-up"></span>
+    </button>
+    {% endif %} {% endif %}
+    <span style="font-style: italic;">
+      <b> Rating: {{ entry.entry_likes.all.count }} </b>
+    </span>
+  </form>
+</div>
