@@ -9,7 +9,7 @@
       <h2 class="card-title">{{ entry.entry_title }}</h2>
       <p class="card-text"> {{ entry.entry_text|truncatechars:100 }}</p>
       <a href="{% url 'entry-detail' entry.pk %}" class="btn btn-primary btn-sm">Read More/Comments &rarr;</a>
-     <span style="font-style: italic;"> <b> Rating: {{ entry.entry_likes.all.count }} </b> (You need to read more to like this idea and see the reviews) </span>
+     <span style="font-style: italic;"> <b> Rating: {{ entry.entry_likes.all.count }} </b> </span>
     </div>
     <div class="card-footer text-muted">
       Posted on {{ entry.entry_date }} by

@@ -1,0 +1,30 @@
+{% extends "entries/base.html" %}
+{% load static %}
+{% block content %}
+<div class="followers-title">
+  <h1> {{user.username}}s list of followings: </h1>
+</div>
+
+{% for searched_user in following %}
+<div class="center-items">
+  <div class="col-md-3">
+    <div class="card" style="width: 18rem;">
+      <h4 class="profile-name"><b>{{searched_user.username}}</b></h4>
+      {% if searched_user.userprofile.image %}
+      <img class="card-img-top" src="{{searched_user.userprofile.image.url}}" width="200px" alt="No image" />
+      {% else %}
+      <img class="card-img-top" src="{% static 'photo/no-photo.png' %}" width="200px" alt="No image" />
+      {% endif %} {% if request.user.is_authenticated %}
+      <div class="card-body">
+        <a href="{% url 'profile' searched_user.pk %}">
+          <h5 class="card-title">View profile</h5>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endif %}
+{% empty %}
+<h4>No users found.</h4>
+{% endfor %} {% endblock %}

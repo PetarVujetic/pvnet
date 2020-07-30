@@ -1,8 +1,6 @@
 <div id="likesystem-section">
   <form method="POST">
-    {% csrf_token %}
-    <a href="{% url 'entry-detail' entry.pk %}" class="btn btn-primary btn-sm">Read More/Comments &rarr;</a>
-    {% if not entry.entry_author == request.user %} {% if is_liked %}
+    {% csrf_token %} {% if not entry.entry_author == request.user %} {% if is_liked %}
     <button type="submit" id="like-post" value="{{ entry.pk }}" class="btn btn-danger btn-sm">
       <span class="glyphicon glyphicon-thumbs-down"></span>
     </button>

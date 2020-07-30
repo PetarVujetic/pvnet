@@ -1,14 +1,15 @@
-from django.shortcuts import render, redirect
-from .forms import RegistrationForm, UserProfileForm
 from django.contrib.auth import authenticate, login
-from .models import UserProfile
-from entries.models import Entry
-from django.views.generic import ListView
 from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from .models import Follower
+from django.views.generic import ListView
+
+from entries.models import Entry
+
+from .forms import RegistrationForm, UserProfileForm
+from .models import Follower, UserProfile
+
 
 def follow_user(request):
     """Follow button"""
@@ -143,3 +144,28 @@ def delete_entry(request):
     if request.is_ajax():
         html = render_to_string("users/userEntries.html", context, request=request)
         return JsonResponse({'form': html})
+
+def followers(request, pk):
+    user = get_object_or_404(User, pk = pk)
+    context = {}
+    lista = []
+    followers = Follower.objects.filter(following=user.userprofile)
+    
+    for i in followers:
+        lista += [i.follower.user]
+    context['followers'] = lista
+    context['user'] = user
+    return render(request, 'users/followers.html', context)
+    
+def following(request, pk):
+    user = get_object_or_404(User, pk = pk)
+    context = {}
+    lista = []
+    following = Follower.objects.filter(follower=user.userprofile)
+
+    for i in following:
+        lista += [i.following.user]
+        
+    context['following'] = lista
+    context['user'] = user
+    return render(request, 'users/following.html', context)

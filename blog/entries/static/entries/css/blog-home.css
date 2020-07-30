@@ -1,31 +1,31 @@
- .profile {
-   margin: 20px 0;
- }
-
-.bg-custom, footer{
-  background-color: #242526;
-
+.profile {
+  margin: 20px 0;
 }
 
-.entryText{
+.bg-custom,
+footer {
+  background-color: #242526;
+}
+
+.entryText {
   width: 100%;
   height: 300px;
 }
 
-.centered{
+.centered {
   margin: auto;
 }
 
 .button,
-.button:focus, 
+.button:focus,
 .button:hover,
-.button:visited{
+.button:visited {
   background: none;
   padding: 0px;
   border: none;
 }
 
-.delete-button{
+.delete-button {
   display: flex;
   width: 95%;
   justify-content: flex-end;
@@ -33,14 +33,12 @@
   color: black;
 }
 
-.delete-button:hover{
+.delete-button:hover {
   color: red;
   background: none;
   padding: 0px;
   border: none;
 }
-
-
 
 .field-icon {
   float: right;
@@ -51,54 +49,60 @@
   z-index: 2;
 }
 
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #fff;
+  width: 240px;
+  height: 300px;
+}
 
- .profile-sidebar {
-   padding: 20px 0 10px 0;
-   background: #fff;
-   width: 240px;
-   height: 300px;
-
- }
-
-.com{
+.com {
   margin-left: 50px;
   margin-top: 0;
   padding-top: 0;
 }
 
+.profile-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 50%;
+  height: 122px;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
 
- .profile-userpic img {
-   float: none;
-   margin: 0 auto;
-   width: 50%;
-   height: 122px;
-   -webkit-border-radius: 50% !important;
-   -moz-border-radius: 50% !important;
-   border-radius: 50% !important;
- }
+.profile-usertitle {
+  text-align: center;
+}
 
- .profile-usertitle {
-   text-align: center;
-   margin-top: 20px;
- }
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
 
- .profile-usertitle-name {
-   color: #5a7391;
-   font-size: 16px;
-   font-weight: 600;
-   margin-bottom: 7px;
- }
+.profile-usertitle-job {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.followers-button:hover{
+text-decoration: none;
+font-weight: 950;
+}
+
+.followers-title{
+width: 100%;
+text-align: center;
+}
 
 
- .profile-usertitle-job {
-   text-transform: uppercase;
-   color: #5b9bd1;
-   font-size: 12px;
-   font-weight: 600;
-   margin-bottom: 0px;
- }
-
-.followers-following{
+.followers-following {
   width: 60px;
   font-weight: bold;
   font-size: 1.5em;
@@ -106,218 +110,241 @@
   padding-right: 12%;
 }
 
+.profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
 
- .profile-userbuttons {
-   text-align: center;
-   margin-top: 10px;
- }
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
 
- .profile-userbuttons .btn {
-   text-transform: uppercase;
-   font-size: 11px;
-   font-weight: 600;
-   padding: 6px 15px;
-   margin-right: 5px;
- }
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
 
- .profile-userbuttons .btn:last-child {
-   margin-right: 0px;
- }
+.profile-usermenu {
+  margin-top: 30px;
+}
 
- .profile-usermenu {
-   margin-top: 30px;
- }
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
 
- .profile-usermenu ul li {
-   border-bottom: 1px solid #f0f4f7;
- }
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
 
- .profile-usermenu ul li:last-child {
-   border-bottom: none;
- }
+.profile-usermenu ul li a {
+  color: #93a3b5;
+  font-size: 14px;
+  font-weight: 400;
+}
 
- .profile-usermenu ul li a {
-   color: #93a3b5;
-   font-size: 14px;
-   font-weight: 400;
- }
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
 
- .profile-usermenu ul li a i {
-   margin-right: 8px;
-   font-size: 14px;
- }
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
 
- .profile-usermenu ul li a:hover {
-   background-color: #fafcfd;
-   color: #5b9bd1;
- }
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
 
- .profile-usermenu ul li.active {
-   border-bottom: none;
- }
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+}
 
- .profile-usermenu ul li.active a {
-   color: #5b9bd1;
-   background-color: #f6f9fb;
-   border-left: 2px solid #5b9bd1;
-   margin-left: -2px;
- }
-
- /* Profile Content */
- .profile-content {
-   padding: 20px;
-   background: #fff;
-   min-height: 460px;
- }
-.wrapper{
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 460px;
+}
+.wrapper {
   min-height: calc(100vh - 70px);
 }
 
-.footer{
+.footer {
   height: 50px;
 }
 
-.card-img-top{
+.card-img-top {
   width: 100%;
   height: 180px;
 }
 
-.profile-card{
+.profile-card {
   width: 100%;
   height: 100%;
 }
-.profile-name{
+.profile-name {
   text-align: center;
   color: #17181c;
 }
 
-.center-items{
-margin: auto;
-margin-top: 20px;
-margin-bottom: 20px;
+.center-items {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-
-
-body{ background: #fafafa;}
+body {
+  background: #fafafa;
+}
 .widget-area.blank {
-background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
--webkit-box-shadow: none;
--moz-box-shadow: none;
--ms-box-shadow: none;
--o-box-shadow: none;
-box-shadow: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
 }
 body .no-padding {
-padding: 0;
+  padding: 0;
 }
 .widget-area {
-background-color: #fff;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
--ms-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
--webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
--moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
--ms-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
--o-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
-float: left;
-margin-top: 30px;
-padding: 25px 30px;
-position: relative;
-width: 100%;
+  background-color: #fff;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+  -ms-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+  -o-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+  float: left;
+  margin-top: 30px;
+  padding: 25px 30px;
+  position: relative;
+  width: 100%;
 }
 .status-upload {
-background: none repeat scroll 0 0 #f5f5f5;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
--ms-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
-float: left;
-width: 100%;
+  background: none repeat scroll 0 0 #f5f5f5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  float: left;
+  width: 100%;
 }
 .status-upload form {
-float: left;
-width: 100%;
+  float: left;
+  width: 100%;
 }
 .status-upload form textarea {
-background: none repeat scroll 0 0 #fff;
-border: medium none;
--webkit-border-radius: 4px 4px 0 0;
--moz-border-radius: 4px 4px 0 0;
--ms-border-radius: 4px 4px 0 0;
--o-border-radius: 4px 4px 0 0;
-border-radius: 4px 4px 0 0;
-color: black;
-float: left;
-font-family: Lato;
-font-size: 14px;
-height: 142px;
-letter-spacing: 0.3px;
-padding: 20px;
-width: 100%;
-resize:vertical;
-outline:none;
-border: 1px solid #F2F2F2;
+  background: none repeat scroll 0 0 #fff;
+  border: medium none;
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  -ms-border-radius: 4px 4px 0 0;
+  -o-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+  color: black;
+  float: left;
+  font-family: Lato;
+  font-size: 14px;
+  height: 142px;
+  letter-spacing: 0.3px;
+  padding: 20px;
+  width: 100%;
+  resize: vertical;
+  outline: none;
+  border: 1px solid #f2f2f2;
 }
 
 .status-upload ul {
-float: left;
-list-style: none outside none;
-margin: 0;
-padding: 0 0 0 15px;
-width: auto;
+  float: left;
+  list-style: none outside none;
+  margin: 0;
+  padding: 0 0 0 15px;
+  width: auto;
 }
 .status-upload ul > li {
-float: left;
+  float: left;
 }
 .status-upload ul > li > a {
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
--ms-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
-color: #777777;
-float: left;
-font-size: 14px;
-height: 30px;
-line-height: 30px;
-margin: 10px 0 10px 10px;
-text-align: center;
--webkit-transition: all 0.4s ease 0s;
--moz-transition: all 0.4s ease 0s;
--ms-transition: all 0.4s ease 0s;
--o-transition: all 0.4s ease 0s;
-transition: all 0.4s ease 0s;
-width: 30px;
-cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  color: #777777;
+  float: left;
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  margin: 10px 0 10px 10px;
+  text-align: center;
+  -webkit-transition: all 0.4s ease 0s;
+  -moz-transition: all 0.4s ease 0s;
+  -ms-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+  width: 30px;
+  cursor: pointer;
 }
 .status-upload ul > li > a:hover {
-background: none repeat scroll 0 0 #606060;
-color: #fff;
+  background: none repeat scroll 0 0 #606060;
+  color: #fff;
 }
 .status-upload form button {
-border: medium none;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
--ms-border-radius: 4px;
--o-border-radius: 4px;
-border-radius: 4px;
-color: #fff;
-float: right;
-font-family: Lato;
-font-size: 14px;
-letter-spacing: 0.3px;
-margin-right: 9px;
-margin-top: 9px;
-padding: 6px 15px;
+  border: medium none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  color: #fff;
+  float: right;
+  font-family: Lato;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  margin-right: 9px;
+  margin-top: 9px;
+  padding: 6px 15px;
 }
 .dropdown > a > span.green:before {
-border-left-color: #2dcb73;
+  border-left-color: #2dcb73;
 }
 .status-upload form button > i {
-margin-right: 7px;
+  margin-right: 7px;
+}
+
+.welcome-title {
+  display: flex;
+  justify-content: center;
+}
+
+.welcome-text {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  line-height: 5vh;
+  font-size: 20px;
+}
+
+.welcome-button {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.welcome-area {
+  margin: auto;
+  margin-top: 10%;
 }

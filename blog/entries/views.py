@@ -1,13 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.views.generic import CreateView, DetailView, ListView
 
 from .models import Comment, Entry
 
 
+def welcome(request):
+    if request.user.is_authenticated:
+        return redirect('blog-home')
+    return render(request, 'welcome.html')
+     
 class HomeView(LoginRequiredMixin, ListView):
     model = Entry
     template_name = 'entries/index.html'
