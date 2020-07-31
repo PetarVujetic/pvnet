@@ -11,7 +11,7 @@ urlpatterns = [
     path('', HomeView.as_view(), name='blog-home'),
     path('welcome/', welcome, name="welcome"),
     path('entry/<int:pk>/', EntryView.as_view(), name = 'entry-detail'),
-    path('create_entry/', CreateEntryView.as_view(success_url='/home'), name = 'create_entry'),
+    path('create_entry/', CreateEntryView.as_view(success_url='/'), name = 'create_entry'),
     path('comment/', createComment, name="createComment"),
     path('deleteComment/', deleteComment, name="deleteComment"),
     path('likePost/', likePost, name="likePost"),
