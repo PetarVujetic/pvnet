@@ -1,0 +1,73 @@
+{% extends "entries/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="col-md-12">
+  {% for notification in notifications %}
+  {%if notification.notification_type == "follow" %}
+  <div class="card mb-4 mt-4">
+    <h5 class="card-header"> <span class="new red">NEW </span>Follow notification</h5>
+    <div class="card-body">
+      <h5 class="card-title"> <a href="{% url 'profile' notification.notification_maker.pk %}">
+          {{notification.notification_maker}} </a> started following you</h5>
+      <p class="card-text">{{notification.notification_date}}</p>
+    </div>
+  </div>
+  {% elif notification.notification_type == "comment" %}
+  <div class="card mb-4 mt-4">
+    <h5 class="card-header"><span class="new red">NEW </span>Comment notification</h5>
+    <div class="card-body">
+      <h5 class="card-title"> <a href="{% url 'profile' notification.notification_maker.pk %}">
+          {{notification.notification_maker}} </a> commented on your <a
+          href="{% url 'entry-detail' notification.commented_post.pk %}">post</a></h5>
+      <p class="card-text">{{notification.notification_date}}.</p>
+    </div>
+  </div>
+  {% elif notification.notification_type == "welcome" %}
+  <div class="card mb-4 mt-4">
+    <h5 class="card-header">Welcome</h5>
+    <div class="card-body">
+      <h5 class="card-title"> Welcome to PVnet! Here you will find all the information about new follows and comments!
+      </h5>
+    </div>
+  </div>
+  {% endif %}
+
+  {% empty %}
+  <h2>No new notifications.</h2>
+  {% endfor %}
+
+  {% for notification in notifications_history %}
+  {%if notification.notification_type == "follow" %}
+  <div class="card mb-4 mt-4">
+    <h5 class="card-header">Follow notification</h5>
+    <div class="card-body">
+      <h5 class="card-title"> <a href="{% url 'profile' notification.notification_maker.pk %}">
+          {{notification.notification_maker}} </a> started following you</h5>
+      <p class="card-text">{{notification.notification_date}}</p>
+    </div>
+  </div>
+  {% elif notification.notification_type == "comment" %}
+  <div class="card mb-4 mt-4">
+    <h5 class="card-header">Comment notification</h5>
+    <div class="card-body">
+      <h5 class="card-title"> <a href="{% url 'profile' notification.notification_maker.pk %}">
+          {{notification.notification_maker}} </a> commented on your <a
+          href="{% url 'entry-detail' notification.commented_post.pk %}">post</a></h5>
+      <p class="card-text">{{notification.notification_date}}.</p>
+    </div>
+  </div>
+  {% elif notification.notification_type == "welcome" %}
+  <div class="card mb-4 mt-4">
+    <h5 class="card-header">Welcome</h5>
+    <div class="card-body">
+      <h5 class="card-title"> Welcome to PVnet! Here you will find all the information about new follows and comments!
+      </h5>
+    </div>
+  </div>
+  {% endif %}
+
+  {% endfor %}
+</div>
+
+{% endblock %}

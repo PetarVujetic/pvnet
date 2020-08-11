@@ -11,7 +11,8 @@
 
   <title>PVNet</title>
   <link href="{% static "entries/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link href="{% static "entries/css/blog-home.css" %}" rel="stylesheet">
 
 </head>
@@ -20,56 +21,75 @@
 
   <div class="wrapper">
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-custom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'blog-home' %}"> <img src="{% static "photo/director.png" %}" width="30px"
+            height="30px" class="d-inline-block align-top"> <i>PV </i><b>Net</b> </a>
+
+
+        {% if user.is_authenticated %}
+        <form class="navbar-form navbar-left" method="GET" action="{% url 'user_search' %}">
+          <div class="form-search">
+            <input type="text" class="form-control search" name="search" placeholder="Search">
+            <button type="submit" class="btn btn-default search-button"> <span
+                class="glyphicon glyphicon-search"></span>
+            </button>
+          </div>
+
+        </form>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="nav navbar-nav navbar-right navbar-resfix">
+
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'notifications' %}"> {% if notification %}
+                <span class="glyphicon glyphicon-flag red"> </span>
+                {{notifications_count}}
+                {% else %}
+                <span class="glyphicon glyphicon-flag"> </span>
+                {% endif %}
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile' user.pk %}"> <span class="glyphicon glyphicon-user"> </span>
+                {{user.username}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create_entry' %}"> <span class="glyphicon glyphicon-pencil"></span> Post
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}"> <span class="glyphicon glyphicon-log-out"> </span> Log
+                Out</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}"> <span class="glyphicon glyphicon-user"></span> Sign
+                Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}"> <span class="glyphicon glyphicon-log-in"></span> Login</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
     <div class="container">
-      <a class="navbar-brand" href="{% url 'blog-home' %}"> <img src="{% static "photo/director.png" %}" width="30px" height="30px" class="d-inline-block align-top"> <i>PV </i><b>Net</b> </a>
-
-
-      {% if user.is_authenticated %}
-      <form class="navbar-form navbar-left" method="GET" action="{% url 'user_search' %}">
-      <div class="form-group">
-        <input type="text" class="form-control" name="search" placeholder="Search">
-      </div>
-      <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-search"></span> </button>
-    </form>
-    {% endif %}
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="nav navbar-nav navbar-right">
-
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' user.pk %}"> <span class="glyphicon glyphicon-user"> </span> {{user.username}}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'create_entry' %}"> <span class="glyphicon glyphicon-pencil"></span> Post </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}"> <span class="glyphicon glyphicon-log-out"> </span> Log Out</a>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}"> <span class="glyphicon glyphicon-user"></span> Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}"> <span class="glyphicon glyphicon-log-in"></span> Login</a>
-          </li>
-          {% endif %}
-        </ul>
+      <div class="row">
+        {% block content %} {% endblock %}
       </div>
     </div>
-  </nav>
-
-  <!-- Page Content -->
-  <div class="container">
-    <div class="row">
-    {% block content %} {% endblock %}
-    </div>
-  </div>
-  <div class="push"></div>
+    <div class="push"></div>
 
   </div>
 
@@ -83,43 +103,43 @@
 
   <script src="{% static "entries/vendor/jquery/jquery.min.js" %}"></script>
   <script src="{% static "entries/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
-  
+
   <script type="text/javascript">
-    $(document).ready(function(event){
-      $(document).on("click", '#follow', function(event){
+    $(document).ready(function (event) {
+      $(document).on("click", '#follow', function (event) {
         event.preventDefault();
         var pk = $(this).attr('value');
         $.ajax({
-          type : 'POST',
-          url : '{% url "follow_user" %}',
-          data : {'pk':pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          type: 'POST',
+          url: '{% url "follow_user" %}',
+          data: { 'pk': pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
           dataType: 'json',
-          success: function(response){
-              $('#follow-section').html(response['form'])
-              console.log($('#follow-section').html(response['form']));
+          success: function (response) {
+            $('#follow-section').html(response['form'])
+            console.log($('#follow-section').html(response['form']));
           },
-          error: function(rs, e){
+          error: function (rs, e) {
             console.log(rs.responseText);
           },
         });
       });
     });
-    $(document).ready(function(event){
-      $(document).on("click", '#comment', function(event){
+    $(document).ready(function (event) {
+      $(document).on("click", '#comment', function (event) {
         event.preventDefault();
         var pk = $(this).attr('value');
         var comment_text = $('textarea#comment_text').val();
         $.ajax({
-          type : 'POST',
-          url : '{% url "createComment" %}',
-          data : {'pk':pk, "comment_text":comment_text, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          type: 'POST',
+          url: '{% url "createComment" %}',
+          data: { 'pk': pk, "comment_text": comment_text, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
           dataType: 'json',
-          success: function(response){
-              $('#comment-section').html(response['form'])
-              console.log($('#comment-section').html(response['form']));
-              console.log("USPEH");
+          success: function (response) {
+            $('#comment-section').html(response['form'])
+            console.log($('#comment-section').html(response['form']));
+            console.log("USPEH");
           },
-          error: function(rs, e){
+          error: function (rs, e) {
             console.log(rs.responseText);
             console.log("NEUSPEH");
           },
@@ -128,34 +148,34 @@
     });
 
 
-      $("body").on('click', '.toggle-password', function() {
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $("#pass_log_id");
-        if (input.attr("type") === "password") {
-          input.attr("type", "text");
-        } else {
-          input.attr("type", "password");
-        }
+    $("body").on('click', '.toggle-password', function () {
+      $(this).toggleClass("fa-eye fa-eye-slash");
+      var input = $("#pass_log_id");
+      if (input.attr("type") === "password") {
+        input.attr("type", "text");
+      } else {
+        input.attr("type", "password");
+      }
 
-      });
+    });
 
 
-      $(document).ready(function(event){
-      $(document).on("click", '#delete', function(event){
+    $(document).ready(function (event) {
+      $(document).on("click", '#delete', function (event) {
         event.preventDefault();
         var pk = $(this).attr('value');
-        
+
         $.ajax({
-          type : 'POST',
-          url : '{% url "delete_entry" %}',
-          data : {'pk':pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          type: 'POST',
+          url: '{% url "delete_entry" %}',
+          data: { 'pk': pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
           dataType: 'json',
-          success: function(response){
-              $('#delete-section').html(response['form'])
-              console.log($('#delete-section').html(response['form']));
-              console.log("USPEH");
+          success: function (response) {
+            $('#delete-section').html(response['form'])
+            console.log($('#delete-section').html(response['form']));
+            console.log("USPEH");
           },
-          error: function(rs, e){
+          error: function (rs, e) {
             console.log(rs.responseText);
             console.log("NEUSPEH");
           },
@@ -163,21 +183,21 @@
       });
     });
 
-    $(document).ready(function(event){
-      $(document).on("click", '#delete-detail', function(event){
+    $(document).ready(function (event) {
+      $(document).on("click", '#delete-detail', function (event) {
         event.preventDefault();
         var pk = $(this).attr('value');
-        
+
         $.ajax({
-          type : 'POST',
-          url : '{% url "delete_entry" %}',
-          data : {'pk':pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          type: 'POST',
+          url: '{% url "delete_entry" %}',
+          data: { 'pk': pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
           dataType: 'json',
-          success: function(response){
-              window.location.href = "{% url 'blog-home' %}";
-              console.log("USPEH");
+          success: function (response) {
+            window.location.href = "{% url 'blog-home' %}";
+            console.log("USPEH");
           },
-          error: function(rs, e){
+          error: function (rs, e) {
             console.log(rs.responseText);
             console.log("NEUSPEH");
           },
@@ -185,41 +205,20 @@
       });
     });
 
-    $(document).ready(function(event){
-      $(document).on("click", '#delete-comment', function(event){
-        event.preventDefault();
-        var pk = $(this).attr('value');
-        $.ajax({
-          type : 'POST',
-          url : '{% url "deleteComment" %}',
-          data : {'pk':pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
-          dataType: 'json',
-          success: function(response){
-              $('#comment-section').html(response['form'])
-              console.log("USPEH");
-          },
-          error: function(rs, e){
-            console.log(rs.responseText);
-            console.log("NEUSPEH");
-          },
-        });
-      });
-    });
-
-    $(document).ready(function(event){
-      $(document).on("click", '#like-post', function(event){
+    $(document).ready(function (event) {
+      $(document).on("click", '#delete-comment', function (event) {
         event.preventDefault();
         var pk = $(this).attr('value');
         $.ajax({
-          type : 'POST',
-          url : '{% url "likePost" %}',
-          data : {'pk':pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          type: 'POST',
+          url: '{% url "deleteComment" %}',
+          data: { 'pk': pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
           dataType: 'json',
-          success: function(response){
-              $('#likesystem-section').html(response['form'])
-              console.log("USPEH");
+          success: function (response) {
+            $('#comment-section').html(response['form'])
+            console.log("USPEH");
           },
-          error: function(rs, e){
+          error: function (rs, e) {
             console.log(rs.responseText);
             console.log("NEUSPEH");
           },
@@ -227,8 +226,29 @@
       });
     });
 
-    
-    
+    $(document).ready(function (event) {
+      $(document).on("click", '#like-post', function (event) {
+        event.preventDefault();
+        var pk = $(this).attr('value');
+        $.ajax({
+          type: 'POST',
+          url: '{% url "likePost" %}',
+          data: { 'pk': pk, 'csrfmiddlewaretoken': "{{ csrf_token }}" },
+          dataType: 'json',
+          success: function (response) {
+            $('#likesystem-section').html(response['form'])
+            console.log("USPEH");
+          },
+          error: function (rs, e) {
+            console.log(rs.responseText);
+            console.log("NEUSPEH");
+          },
+        });
+      });
+    });
+
+
+
   </script>
 </body>
 

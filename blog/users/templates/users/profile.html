@@ -9,6 +9,11 @@
 			<!-- SIDEBAR USERPIC -->
 			<div class="profile-userpic">
 				{% if entry_user.userprofile.image %}
+				{% if entry_user == request.user %}
+				<div class="edit-profile">
+					<a href="{% url 'profile_edit' %}" class="glyphicon glyphicon-cog edit-profile-pen"><i>Edit</i></a>
+				</div>
+				{% endif %}
 				<img src="{{entry_user.userprofile.image.url}}" class="img-responsive" alt="No image">
 				{% else %}
 				<img class="img-responsive" src="{% static 'photo/no-photo.png' %}" alt="No image">

@@ -8,7 +8,7 @@ from django.views.generic import ListView
 from entries.models import Entry
 
 from .forms import RegistrationForm, UserProfileForm
-from .models import Follower, UserProfile
+from .models import Follower, Notification, NotificationHistory, UserProfile
 
 
 def follow_user(request):
@@ -17,9 +17,12 @@ def follow_user(request):
     is_following = False
     user = request.user
 
+    Notification.objects.create(notified_user=user_follow, notification_type="follow", notification_maker=user)
+
     if user_follow.userprofile.followers.all().filter(follower=user.userprofile).exists():
         is_following = False
         Follower.objects.filter(follower=user.userprofile, following=user_follow.userprofile).delete()
+        Notification.objects.filter(notified_user=user_follow, notification_type="follow", notification_maker=user).delete()
     else:
         is_following = True
         Follower.objects.create(follower=user.userprofile, following=user_follow.userprofile)
@@ -48,6 +51,7 @@ class ProfileView(ListView):
     template_name = 'users/profile.html'
     context_object_name = "profile_entries"
     paginate_by = 5
+    
 
     def get_queryset(self):
         return Entry.objects.filter(entry_author_id=self.kwargs['pk']).order_by('-entry_date')
@@ -66,7 +70,11 @@ class ProfileView(ListView):
 
 
 def register(request):
+    context = {}
     if request.method == "POST":
+        context['username'] = request.POST['username']
+        context['email'] = request.POST['email']
+
         form = RegistrationForm(request.POST)
         userForm = UserProfileForm(request.POST)
 
@@ -84,12 +92,14 @@ def register(request):
             username = request.POST['username']
             password = request.POST['password1']
             user = authenticate(request, username = username, password = password)
+            Notification.objects.create(notified_user=user, notification_type="welcome")
             login(request, user)
             return redirect('blog-home')
     else:
         form = RegistrationForm()
         userForm = UserProfileForm()
-    context = {'form':form, 'userForm':userForm}
+    context['form'] = form
+    context['userForm'] = userForm
     return render(request, 'users/register.html', context)
 
 def login_view(request):
@@ -169,3 +179,74 @@ def following(request, pk):
     context['following'] = lista
     context['user'] = user
     return render(request, 'users/following.html', context)
+
+def profile_edit(request):
+
+    if request.method == "POST":
+        context = {}
+        user = request.user
+        email = request.POST['email']
+        username = request.POST['username']
+        followers_number = user.userprofile.followers.all().count()
+        following_number = user.userprofile.following.all().count() 
+
+
+        context['entry_user'] = user
+        context['followers_number'] = followers_number
+        context['following_number'] = following_number
+
+        if not username == user.username:
+            if User.objects.all().filter(username=username).exists():
+                context['usernameerror'] = "A user with that username already exists"
+                return render(request, 'users/profileEdit.html', context)
+            else:
+                user.username = username
+                user.save() 
+
+        if 'image' in request.FILES:
+            image = request.FILES['image']
+            user.userprofile.image = image
+            user.userprofile.save()
+
+        user.email = email
+        user.save()
+
+       
+
+        
+
+        return redirect('profile', user.pk)
+
+    context = {}
+    user = request.user
+
+    if not user:
+        return redirect('welcome')
+
+    followers_number = user.userprofile.followers.all().count()
+    following_number = user.userprofile.following.all().count() 
+
+
+    context['entry_user'] = user
+    context['followers_number'] = followers_number
+    context['following_number'] = following_number
+    return render(request, 'users/profileEdit.html', context)
+
+def notifications(request):
+    context = {}
+    notifications = []
+    notifications_history = []
+
+    if(request.user.is_authenticated):
+        user = request.user 
+
+        notifications_history = NotificationHistory.objects.all().filter(notified_user = user)
+        
+        for i in Notification.objects.all().filter(notified_user = user):
+            notifications += [i]
+            NotificationHistory.objects.create(notified_user=i.notified_user, notification_type=i.notification_type, notification_maker=i.notification_maker, commented_post = i.commented_post)
+            i.delete()
+
+        
+        context = {'notifications' : notifications, 'notifications_history': notifications_history}
+    return render(request, 'users/notifications.html', context)

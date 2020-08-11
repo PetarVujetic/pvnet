@@ -1,0 +1,91 @@
+{% extends "entries/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="row profile">
+  <div class="col-md-3">
+    <div class="profile-sidebar">
+      <!-- SIDEBAR USERPIC -->
+      <div class="profile-userpic">
+        {% if entry_user.userprofile.image %}
+
+        <img src="{{entry_user.userprofile.image.url}}" class="img-responsive" alt="No image">
+        {% else %}
+        <img class="img-responsive" src="{% static 'photo/no-photo.png' %}" alt="No image">
+        {% endif %}
+      </div>
+
+
+
+      <div class="profile-userbuttons">
+        <div class="profile-usertitle-name">
+          {% if entry_user.username%} {{entry_user.username}} {% else %} {{ username }} {% endif %}
+        </div>
+        <div class="profile-usertitle-job">
+          <a href="{% url 'followers' entry_user.pk %}" class="followers-button"> Followers </a> <a
+            href="{% url 'following' entry_user.pk %}" class="followers-button">
+            Following </a>
+        </div>
+        <div id="follow-section">
+          {% include "users/follow.html" %}
+        </div>
+        Joined on {{entry_user.date_joined.date}}
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div class="col-md-8">
+  <div class="row vertical-offset-100">
+    <div class="col-md-7 col-md-offset-4 edt">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Edit your profile</h3>
+        </div>
+        <div class="panel-body">
+          <form accept-charset="UTF-8" method="POST" role="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+
+              <div class="form-group">
+                <label for="username"> Username</label>
+                {% if usernameerror%}
+                <div class="alert alert-warning" role="alert">
+                  {{usernameerror}}
+                </div>
+                {% endif %}
+
+                <input class="form-control" value="{{ entry_user.username }}" name="username" type="text">
+              </div>
+
+              <div class="form-group">
+                <label for="email"> Email</label> {{email.error}}
+                <input class="form-control" value="{{ entry_user.email }}" name="email" type="email">
+              </div>
+
+              <div class="form-group">
+                <label for="image">Profile image:</label> {{form.errors.image}}
+                <input type="file" name="image">
+              </div>
+
+              <input class="btn btn-lg btn-primary btn-block" type="submit" value="Confirm">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}

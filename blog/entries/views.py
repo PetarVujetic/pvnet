@@ -5,6 +5,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.views.generic import CreateView, DetailView, ListView
 
+from users.models import Notification
+
 from .models import Comment, Entry
 
 
@@ -70,11 +72,17 @@ def createComment(request):
     error = False
     if(comment_text!=""):
         Comment.objects.create(comment_author=comment_author, comment_entry=comment_entry, comment_text = comment_text)
+        
+        if comment_author!=comment_entry.entry_author:
+            notified_user = comment_entry.entry_author
+            notification_maker = comment_author
+            Notification.objects.create(notified_user= notified_user, notification_type="comment", notification_maker=notification_maker, commented_post = comment_entry)
     else:
         error = "Comment text can't be empty!"
     
     comments = Comment.objects.filter(comment_entry=comment_entry)
-    print(request.POST)
+
+    
 
     context = {
         "error": error,

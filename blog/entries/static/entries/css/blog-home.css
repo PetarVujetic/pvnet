@@ -76,6 +76,46 @@ footer {
   text-align: center;
 }
 
+.edit-profile{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.edit-profile-pen{
+  margin-right: 10%;
+  color: #000000;
+  text-decoration: none;
+}
+.edit-profile-pen:hover{
+  color: #6c80db;
+  text-decoration: none;
+}
+
+.navbar-resfix{
+  margin-left: 20px;
+}
+
+.search{
+  width: 75%;
+}
+
+.search-button{
+  width: 20%;
+}
+
+.form-search{
+  display: flex !important;
+}
+
+.red{
+color: red;
+}
+
+.new{
+  font-weight: 1000;
+}
+
 .profile-usertitle-name {
   color: #5a7391;
   font-size: 16px;
@@ -93,7 +133,6 @@ footer {
 
 .followers-button:hover{
 text-decoration: none;
-font-weight: 950;
 }
 
 .followers-title{
@@ -109,6 +148,11 @@ text-align: center;
   padding-left: 12%;
   padding-right: 12%;
 }
+
+.edt{
+padding-top: 20px;
+}
+
 
 .profile-userbuttons {
   text-align: center;
