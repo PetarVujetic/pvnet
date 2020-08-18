@@ -73,8 +73,12 @@
               </div>
 
               <input class="btn btn-lg btn-primary btn-block" type="submit" value="Confirm">
+
             </fieldset>
           </form>
+          <br>
+          <a class="btn btn-lg btn-danger btn-block" href="{% url 'profile_delete' %}"
+            onclick='confirm("Are you sure you want to delete your profile?")'> DELETE your profile</a>
         </div>
       </div>
     </div>

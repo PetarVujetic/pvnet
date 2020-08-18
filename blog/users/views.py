@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -92,8 +92,8 @@ def register(request):
             username = request.POST['username']
             password = request.POST['password1']
             user = authenticate(request, username = username, password = password)
-            Notification.objects.create(notified_user=user, notification_type="welcome")
             login(request, user)
+            Notification.objects.create(notified_user=user, notification_type="welcome")
             return redirect('blog-home')
     else:
         form = RegistrationForm()
@@ -241,12 +241,19 @@ def notifications(request):
         user = request.user 
 
         notifications_history = NotificationHistory.objects.all().filter(notified_user = user)
-        
+
         for i in Notification.objects.all().filter(notified_user = user):
             notifications += [i]
-            NotificationHistory.objects.create(notified_user=i.notified_user, notification_type=i.notification_type, notification_maker=i.notification_maker, commented_post = i.commented_post)
+            if(i.notification_type!="welcome"):
+                NotificationHistory.objects.create(notified_user=i.notified_user, notification_type=i.notification_type, notification_maker=i.notification_maker, commented_post = i.commented_post)
             i.delete()
 
         
         context = {'notifications' : notifications, 'notifications_history': notifications_history}
     return render(request, 'users/notifications.html', context)
+
+def profile_delete(request):
+    user = request.user 
+    logout(request)
+    user.delete()
+    return redirect('welcome')
